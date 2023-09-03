@@ -1,0 +1,6 @@
+package com.example.sleev_frontend
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
