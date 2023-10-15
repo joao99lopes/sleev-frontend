@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
-import 'package:sleev_frontend/api.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sleev_frontend/services/api.dart';
 
-import 'error_snack_bar.dart';
+import '../widgets/error_snack_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,8 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text(
             "Login",
@@ -40,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -57,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: TextFormField(
                     controller: passwordController,
                     decoration: const InputDecoration(
@@ -74,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -95,27 +94,25 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-  Future<void> loginUser(TextEditingController emailController,
+  Future<int?> loginUser(TextEditingController emailController,
       TextEditingController passwordController) async {
     Response result = await API.login(
         emailController.value.text, passwordController.value.text);
 
     if (result.statusCode == 200) {
-      var body = json.decode(result.body);
+      var data = json.decode(result.data);
       FlutterSecureStorage storage = const FlutterSecureStorage();
-      await storage.write(key: 'authToken', value: body['auth_token']);
+      await storage.write(key: 'authToken', value: data['auth_token']);
     } else {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 
       scaffoldMessenger.showSnackBar(
         SnackBar(
-          content: ErrorSnackBar(message: 'Custom SnackBar'),
+          content: ErrorSnackBar(message: 'login Custom SnackBar'),
           duration: const Duration(seconds: 3), // Adjust duration as needed
-
         ),
       );
     }
+    return result.statusCode;
   }
-
-
 }

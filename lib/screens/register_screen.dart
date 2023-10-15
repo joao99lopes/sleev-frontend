@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
-import 'package:sleev_frontend/api.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
-import 'error_snack_bar.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
+import 'package:sleev_frontend/services/api.dart';
+import 'package:sleev_frontend/widgets/error_snack_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -187,9 +186,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         birthDateController.text);
 
     if (result.statusCode == 200) {
-      var body = json.decode(result.body);
+      var data = json.decode(result.data);
       FlutterSecureStorage storage = const FlutterSecureStorage();
-      await storage.write(key: 'authToken', value: body['auth_token']);
+      await storage.write(key: 'authToken', value: data['auth_token']);
     } else {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 

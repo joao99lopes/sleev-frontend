@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sleev_frontend/services/api.dart';
+import 'package:sleev_frontend/utils/routes.dart';
 
-import 'global_progress_screen.dart';
-import 'register_screen.dart';
+void main() {
+  runApp(MyApp());
+}
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  var storage = const FlutterSecureStorage();
-  final token = await storage.read(key: 'authToken');
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Initialize the API class with the current context
+    API.initialize(context);
 
-  runApp(
-      MaterialApp(home: token != null ? const RegisterScreen() : const GlobalProgressScreen()));
+    return MaterialApp(
+      initialRoute: '/splash', // Set the initial route to the splash screen
+      routes: myRoutes, // Use the routes from the external routes.dart file
+    );
+  }
 }

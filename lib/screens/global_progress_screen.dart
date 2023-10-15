@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
-import 'package:sleev_frontend/api.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:sleev_frontend/services/api.dart';
 
-import 'error_snack_bar.dart';
+import '../widgets/error_snack_bar.dart';
 
 class GlobalProgressScreen extends StatefulWidget {
   const GlobalProgressScreen({Key? key}) : super(key: key);
@@ -31,12 +31,30 @@ class _GlobalProgressScreenState extends State<GlobalProgressScreen> {
         alignment: Alignment.center,
         child: Column(
           children: [
-            ProgressBarStatus(progressPhase: 1, area: 'F',),
-            ProgressBarStatus(progressPhase: 2, area: 'A',),
-            ProgressBarStatus(progressPhase: 3, area: 'C',),
-            ProgressBarStatus(progressPhase: 2, area: 'E',),
-            ProgressBarStatus(progressPhase: 2, area: 'I',),
-            ProgressBarStatus(progressPhase: 1, area: 'S',),
+            ProgressBarStatus(
+              progressPhase: 1,
+              area: 'F',
+            ),
+            ProgressBarStatus(
+              progressPhase: 2,
+              area: 'A',
+            ),
+            ProgressBarStatus(
+              progressPhase: 3,
+              area: 'C',
+            ),
+            ProgressBarStatus(
+              progressPhase: 2,
+              area: 'E',
+            ),
+            ProgressBarStatus(
+              progressPhase: 2,
+              area: 'I',
+            ),
+            ProgressBarStatus(
+              progressPhase: 1,
+              area: 'S',
+            ),
           ],
         ),
       )));
@@ -47,15 +65,15 @@ class _GlobalProgressScreenState extends State<GlobalProgressScreen> {
         emailController.value.text, passwordController.value.text);
 
     if (result.statusCode == 200) {
-      var body = json.decode(result.body);
+      var data = json.decode(result.data);
       FlutterSecureStorage storage = const FlutterSecureStorage();
-      await storage.write(key: 'authToken', value: body['auth_token']);
+      await storage.write(key: 'authToken', value: data['auth_token']);
     } else {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 
       scaffoldMessenger.showSnackBar(
         SnackBar(
-          content: ErrorSnackBar(message: 'Custom SnackBar'),
+          content: ErrorSnackBar(message: 'global Custom SnackBar'),
           duration: const Duration(seconds: 3), // Adjust duration as needed
         ),
       );
@@ -63,12 +81,12 @@ class _GlobalProgressScreenState extends State<GlobalProgressScreen> {
   }
 }
 
-
 class ProgressBarStatus extends StatelessWidget {
   final int progressPhase;
   final String area;
 
-  ProgressBarStatus({super.key, 
+  ProgressBarStatus({
+    super.key,
     required this.progressPhase,
     required this.area,
   });
@@ -89,23 +107,27 @@ class ProgressBarStatus extends StatelessWidget {
 
     Color? areaColor = colorChoosing[area];
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50), // Removed horizontal padding
-      child: Row(
-        children: [
-          Expanded(flex: 1, child: Text(area)),
-          Expanded(
-            flex: 5,
-            child: LinearProgressIndicator(
-              value: progressStatus,
-              minHeight: 10,
-              backgroundColor: Colors.grey,
-              valueColor: AlwaysStoppedAnimation<Color>(areaColor ?? Colors.black),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+        // Removed horizontal padding
+        child: Row(
+          children: [
+            Expanded(flex: 1, child: Text(area)),
+            Expanded(
+              flex: 5,
+              child: LinearProgressIndicator(
+                value: progressStatus,
+                minHeight: 10,
+                backgroundColor: Colors.grey,
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(areaColor ?? Colors.black),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-
