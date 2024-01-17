@@ -193,9 +193,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 
       scaffoldMessenger.showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: ErrorSnackBar(message: 'Custom SnackBar'),
-          duration: const Duration(seconds: 3), // Adjust duration as needed
+          duration: Duration(seconds: 3), // Adjust duration as needed
         ),
       );
     }

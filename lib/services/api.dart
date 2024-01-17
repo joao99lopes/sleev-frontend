@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class API {
   static const String DEV_API_URL = "http://192.168.1.126:1338/";
   static const String PROD_API_URL = "http://192.168.1.113:1338/";
-  static String _url = PROD_API_URL;
+  static const String _url = PROD_API_URL;
   static BuildContext? context; // Store the BuildContext
 
   // Initialize the API class with the current context

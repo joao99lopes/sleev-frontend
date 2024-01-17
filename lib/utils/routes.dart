@@ -14,12 +14,12 @@ Map<String, Widget Function(BuildContext)> myRoutes = {
           if (snapshot.connectionState == ConnectionState.done) {
             final authToken = snapshot.data;
             if (authToken == null) {
-              return LoginScreen();
+              return const LoginScreen();
             } else {
-              return GlobalProgressScreen();
+              return const GlobalProgressScreen();
             }
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

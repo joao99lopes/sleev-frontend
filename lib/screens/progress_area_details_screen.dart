@@ -16,7 +16,7 @@ class _ProgressAreaDetailsScreenState extends State<ProgressAreaDetailsScreen> {
       appBar: AppBar(
         title: Text(
           widget.area,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 28,
           ),
         ),

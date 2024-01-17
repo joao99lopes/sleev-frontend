@@ -107,9 +107,9 @@ class _LoginScreenState extends State<LoginScreen> {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 
       scaffoldMessenger.showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: ErrorSnackBar(message: 'login Custom SnackBar'),
-          duration: const Duration(seconds: 3), // Adjust duration as needed
+          duration: Duration(seconds: 3), // Adjust duration as needed
         ),
       );
     }

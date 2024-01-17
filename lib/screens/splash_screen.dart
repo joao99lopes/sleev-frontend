@@ -17,13 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Simulate a delay of 2 seconds
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       // After the delay, navigate to the desired screen
       Navigator.pushReplacementNamed(context, '/home');
     });
 
     // Increase the image size gradually over 3 seconds
-    Timer.periodic(Duration(milliseconds: 5), (timer) {
+    Timer.periodic(const Duration(milliseconds: 5), (timer) {
       if (imageSize < 400.0) {
         setState(() {
           imageSize *= 1.1;
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: AnimatedContainer(
-          duration: Duration(seconds: 3), // Duration for image size animation
+          duration: const Duration(seconds: 3), // Duration for image size animation
           width: imageSize,
           height: imageSize,
           child: Image.asset('assets/images/pikachu.jpg'),

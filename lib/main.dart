@@ -3,10 +3,12 @@ import 'package:sleev_frontend/services/api.dart';
 import 'package:sleev_frontend/utils/routes.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Initialize the API class with the current context

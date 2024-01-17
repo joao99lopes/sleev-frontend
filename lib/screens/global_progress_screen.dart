@@ -29,7 +29,7 @@ class _GlobalProgressScreenState extends State<GlobalProgressScreen> {
       body: SingleChildScrollView(
           child: Container(
         alignment: Alignment.center,
-        child: Column(
+        child: const Column(
           children: [
             ProgressBarStatus(
               progressPhase: 1,
@@ -72,9 +72,9 @@ class _GlobalProgressScreenState extends State<GlobalProgressScreen> {
       final scaffoldMessenger = ScaffoldMessenger.of(context);
 
       scaffoldMessenger.showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: ErrorSnackBar(message: 'global Custom SnackBar'),
-          duration: const Duration(seconds: 3), // Adjust duration as needed
+          duration: Duration(seconds: 3), // Adjust duration as needed
         ),
       );
     }
@@ -85,7 +85,7 @@ class ProgressBarStatus extends StatelessWidget {
   final int progressPhase;
   final String area;
 
-  ProgressBarStatus({
+  const ProgressBarStatus({
     super.key,
     required this.progressPhase,
     required this.area,
